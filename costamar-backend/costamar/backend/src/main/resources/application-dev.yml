@@ -1,0 +1,21 @@
+# Profil "dev" : base H2 en mémoire, pratique pour tester sans installer MariaDB.
+# Lancer avec : SPRING_PROFILES_ACTIVE=dev mvn spring-boot:run
+spring:
+  datasource:
+    url: jdbc:h2:mem:costamar;DB_CLOSE_DELAY=-1;MODE=MySQL
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

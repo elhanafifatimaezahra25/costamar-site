@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #121414;
+  --color-bg-raised: #181b1a;
+  --color-bg-inset: #0d0f0e;
+  --color-fg: #e3e2e2;
+  --color-fg-muted: #a6a9a6;
+  --color-fg-faint: #6e716e;
+  --color-gold: #c9a96a;
+  --color-gold-soft: rgba(201, 169, 106, 0.12);
+  --color-stone: #8c8577;
+  --color-beige: #d8cfc0;
+  --color-emerald: #1f3b32;
+  --color-border: #2a2d2b;
+
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --container-max: 1280px;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-bg-raised: var(--color-bg-raised);
+  --color-bg-inset: var(--color-bg-inset);
+  --color-fg: var(--color-fg);
+  --color-fg-muted: var(--color-fg-muted);
+  --color-fg-faint: var(--color-fg-faint);
+  --color-gold: var(--color-gold);
+  --color-gold-soft: var(--color-gold-soft);
+  --color-stone: var(--color-stone);
+  --color-beige: var(--color-beige);
+  --color-emerald: var(--color-emerald);
+  --color-border: var(--color-border);
+
+  --font-display: var(--font-cormorant);
+  --font-sans: var(--font-inter);
+}
+
+html {
+  background: var(--color-bg);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans), Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4,
+.font-display {
+  font-family: var(--font-display), "Cormorant Garamond", serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  font-family: var(--font-sans), Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.container-lux {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 768px) {
+  .container-lux {
+    padding-inline: 32px;
+  }
+}
+
+.section-pad {
+  padding-block: 88px;
+}
+
+@media (min-width: 1024px) {
+  .section-pad {
+    padding-block: 160px;
+  }
+}
+
+::selection {
+  background: var(--color-gold-soft);
+  color: var(--color-fg);
+}
+
+/* Subtle warm-gold duotone treatment applied over sourced photography so a
+   mixed set of stock images reads as one consistent, cinematic world. */
+/* Deliberately no `position` here: every call site already carries its own
+   Tailwind position utility (absolute/relative/sticky) and this rule's
+   source order would otherwise beat and override it (same specificity). */
+.photo-treated {
+  overflow: hidden;
+}
+
+.photo-treated::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(18, 20, 20, 0) 40%, rgba(18, 20, 20, 0.55) 100%),
+    radial-gradient(120% 120% at 50% 0%, rgba(201, 169, 106, 0.08), transparent 60%);
+  pointer-events: none;
+}
+
+.photo-treated img {
+  filter: saturate(0.92) contrast(1.02);
+}
