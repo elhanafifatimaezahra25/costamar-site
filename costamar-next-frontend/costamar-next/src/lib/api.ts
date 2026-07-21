@@ -1,8 +1,30 @@
 import axios from "axios";
+import { getToken, clearToken } from "./auth";
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
 export const api = axios.create({ baseURL });
+
+api.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error?.response?.status === 401) {
+      clearToken();
+      if (typeof window !== "undefined" && window.location.pathname.startsWith("/admin")) {
+        window.location.href = "/admin/login";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 /** Extrait un message d'erreur lisible depuis une réponse d'API en erreur */
 export function extractErrorMessage(
@@ -121,7 +143,7 @@ export const lookupBookingsByEmail = (email: string) =>
 
 export const cancelBooking = (id: number) => api.patch(`/api/bookings/${id}/cancel`);
 
-// ---- Admin (pas d'authentification, cf. cahier des charges) ----
+// ---- Admin (nécessite un token JWT, cf. lib/auth.ts) ----
 export const adminListServices = () =>
   api.get<SpaService[]>("/api/admin/services").then((r) => r.data);
 

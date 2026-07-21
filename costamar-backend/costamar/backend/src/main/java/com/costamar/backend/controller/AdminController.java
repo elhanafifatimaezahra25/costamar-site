@@ -22,10 +22,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Tableau de bord administrateur : pas d'authentification, accessible
- * directement (conformément au cahier des charges du site).
- */
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor

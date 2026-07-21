@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
-import { LayoutDashboard, CalendarClock, Sparkles, Clock, ExternalLink } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState, type ReactNode } from "react";
+import { LayoutDashboard, CalendarClock, Sparkles, Clock, ExternalLink, LogOut } from "lucide-react";
+import { getToken, logout } from "@/lib/auth";
 
 const LINKS = [
   { href: "/admin", label: "Vue d'ensemble", icon: LayoutDashboard },
@@ -22,6 +23,18 @@ export default function AdminShell({
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (!getToken()) {
+      router.replace("/admin/login");
+      return;
+    }
+    setChecked(true);
+  }, [router]);
+
+  if (!checked) return null;
 
   return (
     <div className="flex min-h-screen bg-[var(--color-bg)]">
@@ -51,7 +64,7 @@ export default function AdminShell({
             );
           })}
         </nav>
-        <div className="absolute bottom-6 left-6">
+        <div className="absolute bottom-6 left-6 flex flex-col gap-2">
           <Link
             href="/"
             className="flex items-center gap-2 text-xs text-[var(--color-fg-faint)] hover:text-[var(--color-gold)]"
@@ -59,6 +72,13 @@ export default function AdminShell({
             <ExternalLink size={13} />
             Retour au site
           </Link>
+          <button
+            onClick={logout}
+            className="flex items-center gap-2 text-xs text-[var(--color-fg-faint)] hover:text-[var(--color-gold)]"
+          >
+            <LogOut size={13} />
+            Déconnexion
+          </button>
         </div>
       </aside>
 
