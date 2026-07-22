@@ -88,10 +88,13 @@ export function SplitTextReveal({
   text,
   className,
   as: Tag = "h2",
+  goldWords = [],
 }: {
   text: string;
   className?: string;
   as?: "h1" | "h2" | "h3";
+  /** Words (case-insensitive, punctuation-stripped) rendered in gold. */
+  goldWords?: string[];
 }) {
   const reduced = useReducedMotion();
   const words = text.split(" ");
@@ -124,14 +127,22 @@ export function SplitTextReveal({
       style={{ overflow: "hidden" }}
     >
       <Tag className="m-0 inline">
-        {words.map((w, i) => (
-          <span key={i} style={{ display: "inline-block", overflow: "hidden" }}>
-            <motion.span variants={word} style={{ display: "inline-block" }}>
-              {w}
-              {i < words.length - 1 ? "\u00A0" : ""}
-            </motion.span>
-          </span>
-        ))}
+        {words.map((w, i) => {
+          const bare = w.replace(/[.,!?'']/g, "").toLowerCase();
+          const isGold = goldWords.some((g) => g.toLowerCase() === bare);
+          return (
+            <span key={i} style={{ display: "inline-block", overflow: "hidden" }}>
+              <motion.span
+                variants={word}
+                style={{ display: "inline-block" }}
+                className={isGold ? "text-[var(--color-gold)]" : undefined}
+              >
+                {w}
+                {i < words.length - 1 ? "\u00A0" : ""}
+              </motion.span>
+            </span>
+          );
+        })}
       </Tag>
     </motion.div>
   );

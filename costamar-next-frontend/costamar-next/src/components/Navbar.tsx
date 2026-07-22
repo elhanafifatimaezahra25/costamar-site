@@ -3,14 +3,18 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "./ui/Button";
 import { Logo } from "./Logo";
 import { Menu, X } from "lucide-react";
 
+const EASE_PREMIUM: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 const LINKS = [
-  { href: "/soins", label: "Nos soins" },
+  { href: "/#univers", label: "Nos univers de soins" },
+  { href: "/#rituels", label: "Rituels signature" },
   { href: "/#experience", label: "L'expérience" },
-  { href: "/#galerie", label: "Galerie" },
+  { href: "/soins", label: "La carte des soins" },
   { href: "/mes-reservations", label: "Mon suivi" },
   { href: "/contact", label: "Contact" },
 ];
@@ -28,71 +32,101 @@ export default function Navbar() {
 
   useEffect(() => setOpen(false), [pathname]);
 
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "border-b border-[var(--color-border)] bg-[var(--color-bg)]/70 shadow-[0_8px_30px_-15px_rgba(0,0,0,0.5)] backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
-      <div
-        className={`container-lux flex items-center justify-between transition-all duration-500 ${
-          scrolled ? "h-[72px]" : "h-20"
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "border-b border-[var(--color-border)] bg-[var(--color-bg)]/70 shadow-[0_8px_30px_-15px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+            : "border-b border-transparent bg-transparent"
         }`}
       >
-        <Link
-          href="/"
-          className="text-[var(--color-fg)] drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
+        <div
+          className={`container-lux flex items-center justify-between transition-all duration-500 ${
+            scrolled ? "h-16" : "h-20"
+          }`}
         >
-          <Logo markClassName="h-9 w-auto shrink-0" />
-        </Link>
+          <Link
+            href="/"
+            className="text-[var(--color-fg)] drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]"
+          >
+            <Logo markClassName="h-9 w-auto shrink-0" />
+          </Link>
 
-        <nav className="hidden items-center gap-10 md:flex">
-          {LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-gold)]"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+          <p className="hidden text-xs font-semibold uppercase tracking-[0.28em] text-[var(--color-fg-muted)] lg:block">
+            Hammam &amp; Spa Privé — Tétouan
+          </p>
 
-        <div className="hidden md:block">
-          <Button href="/reservation" className="!px-6 !py-2.5 text-sm">
-            Réserver
-          </Button>
-        </div>
-
-        <button
-          className="text-[var(--color-fg)] md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Ouvrir le menu"
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {open && (
-        <div className="border-t border-[var(--color-border)] bg-[var(--color-bg)] px-6 py-8 md:hidden">
-          <nav className="flex flex-col gap-6">
-            {LINKS.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="text-lg text-[var(--color-fg)]"
-              >
-                {l.label}
-              </Link>
-            ))}
-            <Button href="/reservation" className="mt-2 w-full">
+          <div className="flex items-center gap-4">
+            <Button href="/reservation" variant="goldOutline" className="hidden sm:inline-flex">
               Réserver
             </Button>
-          </nav>
+            <button
+              className="flex h-10 w-10 items-center justify-center text-[var(--color-fg)]"
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Ouvrir le menu"
+            >
+              <Menu size={22} />
+            </button>
+          </div>
         </div>
-      )}
-    </header>
+      </header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: EASE_PREMIUM }}
+            className="fixed inset-0 z-[60] flex flex-col bg-[var(--color-bg-inset)]"
+          >
+            <div className="container-lux flex h-20 items-center justify-between">
+              <Logo markClassName="h-9 w-auto shrink-0 text-[var(--color-fg)]" />
+              <button
+                className="flex h-10 w-10 items-center justify-center text-[var(--color-fg)]"
+                onClick={() => setOpen(false)}
+                aria-label="Fermer le menu"
+              >
+                <X size={22} />
+              </button>
+            </div>
+
+            <nav className="container-lux flex flex-1 flex-col justify-center gap-2 pb-20">
+              {LINKS.map((l, i) => (
+                <motion.div
+                  key={l.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + i * 0.06, duration: 0.6, ease: EASE_PREMIUM }}
+                >
+                  <Link
+                    href={l.href}
+                    className="font-display block py-3 text-4xl text-[var(--color-fg)] transition-colors hover:text-[var(--color-gold)] md:text-6xl"
+                  >
+                    {l.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + LINKS.length * 0.06, duration: 0.6, ease: EASE_PREMIUM }}
+                className="mt-8"
+              >
+                <Button href="/reservation">Réserver votre rituel</Button>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

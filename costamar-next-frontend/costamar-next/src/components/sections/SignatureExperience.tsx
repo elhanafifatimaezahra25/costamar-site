@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Reveal, StaggerGroup, StaggerItem } from "@/components/ui/Reveal";
+import { Reveal, SplitTextReveal, StaggerGroup, StaggerItem } from "@/components/ui/Reveal";
 import { IMG } from "@/lib/images";
 
 const EASE_PREMIUM: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -11,29 +11,29 @@ const EASE_PREMIUM: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const STAGES = [
   {
     number: "I",
-    title: "L'accueil",
-    text: "Thé à la fleur d'oranger, ambiance tamisée : le rituel commence bien avant le soin.",
+    title: "Consultation Sensorielle",
+    text: "Analyse de vos besoins spécifiques, sélection personnalisée de vos huiles de massage et choix de l'intensité aromatique.",
     image: IMG.signature.accueil,
     alt: "Salon d'accueil Costamar, thé marocain sur plateau en laiton",
   },
   {
     number: "II",
-    title: "La vapeur",
-    text: "Le hammam traditionnel ouvre les pores et prépare le corps à recevoir le soin.",
+    title: "Immersion Vapeur & Bain",
+    text: "Préparation du corps dans notre hammam privatif pour ouvrir les pores et détendre le système musculaire en profondeur.",
     image: IMG.signature.vapeur,
     alt: "Banc en marbre du hammam traditionnel Costamar, éclairage chaud",
   },
   {
     number: "III",
-    title: "Le gommage",
-    text: "Savon noir et gant kessa : la peau retrouve sa douceur d'origine.",
+    title: "Le Soin Signature",
+    text: "Application de techniques de massage exclusives combinant manœuvres enveloppantes et digitopression ciblée.",
     image: IMG.signature.gommage,
     alt: "Table de gommage en marbre du hammam Costamar avec bols traditionnels",
   },
   {
     number: "IV",
-    title: "Le massage",
-    text: "Huiles chaudes et gestes précis dénouent les dernières tensions.",
+    title: "Éveil, Infusion & Repos",
+    text: "Retour au calme progressif dans nos salons de repos avec dégustation de thés détoxifiants et élixirs floraux.",
     image: IMG.signature.massage,
     alt: "Couloir en marbre menant aux cabines de massage privées",
   },
@@ -67,10 +67,14 @@ export default function SignatureExperience() {
 
         <div>
           <Reveal>
-            <p className="eyebrow mb-4">L&apos;expérience signature</p>
-            <h2 className="font-display text-4xl text-[var(--color-fg)] md:text-5xl">
-              Parcours bien-être
-            </h2>
+            <p className="eyebrow-numbered mb-6">03 / L&apos;Expérience</p>
+          </Reveal>
+          <SplitTextReveal
+            as="h2"
+            text="Votre parcours bien-être."
+            className="font-headline text-4xl text-[var(--color-fg)] sm:text-5xl"
+          />
+          <Reveal delay={0.15}>
             <p className="mt-4 max-w-md text-[var(--color-fg-muted)]">
               Un enchaînement orchestré au millimètre pour garantir une
               déconnexion totale dès votre arrivée.
@@ -91,7 +95,7 @@ export default function SignatureExperience() {
                     {stage.number}
                   </span>
                   <div>
-                    <h3 className="font-display text-2xl text-[var(--color-fg)]">
+                    <h3 className="font-headline text-xl text-[var(--color-fg)]">
                       {stage.title}
                     </h3>
                     <p className="mt-2 text-[var(--color-fg-muted)]">{stage.text}</p>

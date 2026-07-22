@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Reveal, StaggerGroup, StaggerItem } from "@/components/ui/Reveal";
+import { Reveal, SplitTextReveal, StaggerGroup, StaggerItem } from "@/components/ui/Reveal";
 
 const EASE_PREMIUM: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const RADIUS = 54;
@@ -14,12 +14,12 @@ const FIGURES = [
     text: "Une sélection rigoureuse d'ingrédients purs, sans compromis.",
   },
   {
-    value: 100,
+    value: 98,
     label: "Praticiennes & thérapeutes certifiées",
     text: "Un savoir-faire formé aux techniques les plus exigeantes.",
   },
   {
-    value: 98,
+    value: 99,
     label: "Satisfaction clientèle",
     text: "Une expérience pensée pour dépasser chaque attente.",
   },
@@ -70,10 +70,13 @@ export default function KeyFigures() {
       <div className="container-lux">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="eyebrow mb-6">Rigueur opérationnelle</p>
-          <h2 className="font-display text-4xl text-[var(--color-fg)] md:text-5xl">
-            Une exigence portée jusque dans le détail
-          </h2>
         </Reveal>
+        <SplitTextReveal
+          as="h2"
+          text="Une exigence portée jusque dans le détail."
+          goldWords={["jusque", "dans", "le", "détail."]}
+          className="font-headline mx-auto max-w-3xl text-center text-4xl text-[var(--color-fg)] sm:text-5xl"
+        />
 
         <StaggerGroup className="mt-16 grid gap-10 sm:grid-cols-3">
           {FIGURES.map((f) => (

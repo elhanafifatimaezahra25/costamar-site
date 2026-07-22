@@ -89,7 +89,7 @@ export default function BookingFlow({ services }: { services: SpaService[] }) {
         serviceId: selectedService.id,
         clientName: form.clientName,
         clientPhone: form.clientPhone,
-        clientEmail: form.clientEmail || `client+${Date.now()}@costamar-hammam.com`,
+        clientEmail: form.clientEmail || `client+${Date.now()}@costamarspa.ma`,
         startTime,
         notes: form.notes || undefined,
       });

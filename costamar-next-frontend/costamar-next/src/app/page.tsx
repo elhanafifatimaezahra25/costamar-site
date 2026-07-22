@@ -1,33 +1,37 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Hero from "@/components/sections/Hero";
-import Intro from "@/components/sections/Intro";
-import FeaturedTreatments from "@/components/sections/FeaturedTreatments";
-import SignatureExperience from "@/components/sections/SignatureExperience";
-import WhyChooseUs from "@/components/sections/WhyChooseUs";
+import Echappee from "@/components/sections/Echappee";
+import NosUniversDeSoins from "@/components/sections/NosUniversDeSoins";
+import RituelsSignature from "@/components/sections/RituelsSignature";
+import Sanctuaire from "@/components/sections/Sanctuaire";
 import KeyFigures from "@/components/sections/KeyFigures";
-import Gallery from "@/components/sections/Gallery";
-import Pricing from "@/components/sections/Pricing";
-import Testimonials from "@/components/sections/Testimonials";
+import SignatureExperience from "@/components/sections/SignatureExperience";
 import BookingCta from "@/components/sections/BookingCta";
-import ContactSection from "@/components/sections/ContactSection";
+import { ScrollProgressDots } from "@/components/ui/ScrollProgressDots";
+
+const SECTION_IDS = [
+  "hero",
+  "echappee",
+  "univers",
+  "rituels",
+  "experience",
+];
 
 export default function Home() {
   return (
     <>
       <Navbar />
+      <ScrollProgressDots sectionIds={SECTION_IDS} />
       <main>
         <Hero />
-        <Intro />
-        <FeaturedTreatments />
-        <SignatureExperience />
-        <WhyChooseUs />
+        <Echappee />
+        <NosUniversDeSoins />
+        <RituelsSignature />
+        <Sanctuaire />
         <KeyFigures />
-        <Gallery />
-        <Pricing />
-        <Testimonials />
+        <SignatureExperience />
         <BookingCta />
-        <ContactSection />
       </main>
       <Footer />
     </>

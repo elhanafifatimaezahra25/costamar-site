@@ -11,8 +11,23 @@ export const metadata = {
   title: "Nos soins — Costamar Hammam & Spa",
 };
 
-export default async function SoinsPage() {
-  const { services } = await getServicesSafe();
+const CATEGORY_LABELS: Record<string, string> = {
+  SPA_MASSAGE: "Spa & Massage",
+  SOINS: "Soins",
+  BEAUTE: "Beauté",
+  HAMMAM_PRIVE: "Hammam",
+};
+
+export default async function SoinsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const { category } = await searchParams;
+  const { services: allServices } = await getServicesSafe();
+  const services = category
+    ? allServices.filter((s) => s.category === category)
+    : allServices;
   const categoryCounts: Record<string, number> = {};
 
   return (
@@ -23,8 +38,34 @@ export default async function SoinsPage() {
           <Reveal className="mx-auto max-w-2xl text-center">
             <p className="eyebrow mb-4">Nos rituels</p>
             <h1 className="font-display text-4xl text-[var(--color-fg)] md:text-5xl">
-              La carte des soins
+              {category ? CATEGORY_LABELS[category] ?? "La carte des soins" : "La carte des soins"}
             </h1>
+          </Reveal>
+
+          <Reveal className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/soins"
+              className={`rounded-full border px-5 py-2 text-sm transition-colors ${
+                !category
+                  ? "border-[var(--color-gold)] text-[var(--color-gold)]"
+                  : "border-[var(--color-border)] text-[var(--color-fg-muted)] hover:border-[var(--color-gold)]"
+              }`}
+            >
+              Tous les soins
+            </Link>
+            {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
+              <Link
+                key={key}
+                href={`/soins?category=${key}`}
+                className={`rounded-full border px-5 py-2 text-sm transition-colors ${
+                  category === key
+                    ? "border-[var(--color-gold)] text-[var(--color-gold)]"
+                    : "border-[var(--color-border)] text-[var(--color-fg-muted)] hover:border-[var(--color-gold)]"
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
           </Reveal>
 
           <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

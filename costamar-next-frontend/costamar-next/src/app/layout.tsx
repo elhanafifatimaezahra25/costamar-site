@@ -13,14 +13,14 @@ const cormorant = Cormorant_Garamond({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Costamar — Hammam & Spa de Luxe",
+  title: "Costamar — Hammam & Spa Privé",
   description:
-    "Un sanctuaire de bien-être au cœur de Casablanca. Rituels de hammam, soins signature et massages sur-mesure, dans une atmosphère cinématique et intemporelle.",
+    "Un sanctuaire de bien-être au cœur de Tétouan. Rituels de hammam, soins signature et massages sur-mesure, dans une atmosphère cinématique et intemporelle.",
 };
 
 export default function RootLayout({

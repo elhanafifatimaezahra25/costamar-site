@@ -21,19 +21,16 @@ export default function ContactSection() {
             <div className="flex items-start gap-4">
               <MapPin className="mt-1 text-[var(--color-gold)]" size={20} />
               <div>
-                <p className="text-[var(--color-fg)]">Boulevard Anfa, Casablanca, Maroc</p>
-                <p className="text-sm text-[var(--color-fg-muted)]">
-                  À 5 minutes du parc de la Ligue Arabe
-                </p>
+                <p className="text-[var(--color-fg)]">Avenue de la Corniche, Tétouan, Maroc</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <Phone className="text-[var(--color-gold)]" size={20} />
-              <p className="text-[var(--color-fg)]">+212 5 22 00 00 00</p>
+              <p className="text-[var(--color-fg)]">+212 (0) 639 XX XX XX</p>
             </div>
             <div className="flex items-center gap-4">
               <Mail className="text-[var(--color-gold)]" size={20} />
-              <p className="text-[var(--color-fg)]">contact@costamar-hammam.com</p>
+              <p className="text-[var(--color-fg)]">contact@costamarspa.ma</p>
             </div>
           </div>
 
@@ -56,7 +53,7 @@ export default function ContactSection() {
               title="Localisation Costamar Hammam & Spa"
               className="h-full w-full min-h-[420px] border-0"
               loading="lazy"
-              src="https://www.google.com/maps?q=Boulevard%20Anfa%2C%20Casablanca%2C%20Maroc&output=embed"
+              src="https://www.google.com/maps?q=Avenue%20de%20la%20Corniche%2C%20T%C3%A9touan%2C%20Maroc&output=embed"
             />
           </div>
         </Reveal>
